@@ -27,26 +27,21 @@ def home(request):
 def set_user(request):
     if request.method == 'POST':
         current_user = request.POST.get('current_user', '').strip()
-        if current_user:
-            request.session['current_user'] = current_user
-            messages.success(request, 'Текущий пользователь сохранён.')
-        else:
-            messages.error(request, 'Введите имя или e-mail пользователя.')
+        request.session['current_user'] = current_user
+        messages.success(request, 'Текущий пользователь сохранён.')
     return redirect('home')
 
 
 def compose_email(request):
     current_user = get_current_user(request)
 
+    #Отправляем письмо
     if request.method == 'POST':
         recipient = request.POST.get('recipient', '').strip()
         subject = request.POST.get('subject', '').strip()
         body = request.POST.get('body', '').strip()
 
-        if not recipient or not subject or not body:
-            messages.error(request, 'Все поля должны быть заполнены.')
-            return render(request, 'mailapp/compose.html', {'current_user': current_user})
-
+        #Исходящее письмо
         mailapp.models.Email.objects.create(
             sender=current_user,
             recipient=recipient,
@@ -56,6 +51,7 @@ def compose_email(request):
             is_read=True,
         )
 
+        #Входящее письмо
         mailapp.models.Email.objects.create(
             sender=current_user,
             recipient=recipient,
