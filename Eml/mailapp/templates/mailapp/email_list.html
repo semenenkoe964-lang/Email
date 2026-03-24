@@ -1,0 +1,27 @@
+{% extends 'mailapp/base.html' %}
+
+{% block content %}
+<div class="box">
+    <h2>Папка: {{ folder_name }}</h2>
+    <table>
+        <tr>
+            <th>Отправитель</th>
+            <th>Получатель</th>
+            <th>Тема</th>
+            <th>Дата</th>
+        </tr>
+        {% for email in emails %}
+        <tr class="{% if not email.is_read and folder_name != 'sent' %}unread{% endif %}">
+            <td>{{ email.sender }}</td>
+            <td>{{ email.recipient }}</td>
+            <td><a href="{% url 'email_detail' email.id %}">{{ email.subject }}</a></td>
+            <td>{{ email.created_at|date:'d.m.Y H:i' }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Писем нет.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

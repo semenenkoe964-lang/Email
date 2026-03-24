@@ -1,0 +1,23 @@
+{% extends 'mailapp/base.html' %}
+
+{% block content %}
+<div class="box">
+    <h2>Выбор пользователя</h2>
+    <form method="post" action="{% url 'set_user' %}">
+        {% csrf_token %}
+        <label>ee-mail:</label>
+        <input type="text" name="current_user" value="{{ current_user }}">
+        <button type="submit">Сохранить</button>
+    </form>
+</div>
+
+<div class="box">
+    <h2>Папки</h2>
+    <ul>
+        <li><a href="{% url 'email_list' 'inbox' %}">Входящие</a> — {{ inbox_count }}</li>
+        <li><a href="{% url 'email_list' 'sent' %}">Исходящие</a> — {{ sent_count }}</li>
+        <li><a href="{% url 'email_list' 'archive' %}">Архив</a> — {{ archive_count }}</li>
+        <li><a href="{% url 'email_list' 'trash' %}">Корзина</a> — {{ trash_count }}</li>
+    </ul>
+</div>
+{% endblock %}

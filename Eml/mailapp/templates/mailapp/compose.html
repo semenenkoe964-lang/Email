@@ -1,0 +1,23 @@
+{% extends 'mailapp/base.html' %}
+
+{% block content %}
+<div class="box">
+    <h2>Новое письмо</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label>От кого:</label>
+        <input type="text" value="{{ current_user }}" disabled>
+
+        <label>Кому:</label>
+        <input type="text" name="recipient">
+
+        <label>Тема:</label>
+        <input type="text" name="subject">
+
+        <label>Текст:</label>
+        <textarea name="body" rows="10"></textarea>
+
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+{% endblock %}
