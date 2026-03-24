@@ -6,8 +6,9 @@ import mailapp.models
 def get_current_user(request):
     return request.session.get('current_user', 'student@example.com')
 
-
+#Главная страница
 def home(request):
+    #Узнаем пользователя
     current_user = get_current_user(request)
     inbox_count = mailapp.models.Email.objects.filter(recipient=current_user, folder='inbox').count()
     sent_count = mailapp.models.Email.objects.filter(sender=current_user, folder='sent').count()
