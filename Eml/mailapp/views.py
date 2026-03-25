@@ -99,12 +99,9 @@ def move_email(request, email_id):
     email = get_object_or_404(mailapp.models.Email, id=email_id)
     new_folder = request.POST.get('folder')
 
-    if new_folder in ['inbox', 'archive', 'trash', 'sent']:
-        email.folder = new_folder
-        email.save()
-        messages.success(request, 'Письмо перемещено.')
-    else:
-        messages.error(request, 'Неизвестная папка.')
+    email.folder = new_folder
+    email.save()
+    messages.success(request, 'Письмо перемещено.')
 
     return redirect('email_detail', email_id=email.id)
 
