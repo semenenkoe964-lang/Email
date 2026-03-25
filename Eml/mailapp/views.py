@@ -24,7 +24,7 @@ def home(request):
     }
     return render(request, 'mailapp/home.html', context)
 
-#получаем пользователя
+#добавляем пользователя в сесси
 def set_user(request):
     if request.method == 'POST':
         current_user = request.POST.get('current_user', '').strip()
