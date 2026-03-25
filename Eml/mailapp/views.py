@@ -4,7 +4,7 @@ import mailapp.models
 
 
 def get_current_user(request):
-    return request.session.get('current_user', 'student@example.com')
+    return request.session.get('current_user', 'student@ex.com')
 
 #Главная страница
 def home(request):
